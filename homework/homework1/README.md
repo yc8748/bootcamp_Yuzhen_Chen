@@ -15,10 +15,11 @@ The project aims to evaluate the robustness of this strategy under current marke
 - Descriptive / Predictive / Causal: Predicting future risk is important
 - Metric or artifact: Sharpe Ratio, Max Drawdown, Win Rate 
 ### Assumptions & Constraints
-- Data should be reliable
+- Reliable data; Sufficient liquidity;
 
 ### Known Unknowns / Risks
 - Future market violatility is unknown
+- Assumed transaction costs diverge from reality
 
 ### Lifecycle Mapping
 - Goal → Stage → Deliverable mapping bullets
