@@ -5,3 +5,7 @@ __pycache__/
 *.pyc
 # Ignore environment files
 .env
+# Ignore Jupyter Notebook cache files
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+.virtual_documents/
