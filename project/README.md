@@ -47,7 +47,7 @@ The project aims to analyze historical stock price data for AAPL to understand m
 | Detect & assess outliers | Stage 7: Outlier Detection | Outlier flags, sensitivity analysis, regression comparisons |
 | Explore & understand data | Stage 8: EDA | Distribution plots, correlation matrices, time series visualizations |
 | Engineer predictive features | Stage 9: Feature Engineering | Feature-rich dataset for modeling |
-| Model & evaluate | Future Stage | Predictive models, performance metrics, recommendations |
+| Model & evaluate | Stage 10: Model Regression | Predictive models, performance metrics, recommendations |
 
 ---
 
@@ -187,6 +187,54 @@ Three new features were created to capture market behavior and improve predictiv
 1. **Volatility:** Captures market uncertainty. Higher volatility correlates with higher risk and potential returns.
 2. **Momentum:** Identifies trend strength. Positive momentum suggests continued upward movement; negative momentum indicates potential sell-offs.
 3. **Turnover Value:** Measures market participation. High turnover with strong price movement confirms trend validity.
+
+---
+
+## Stage 10: Model Regression
+
+### Modeling Approach
+
+A baseline linear regression model was developed to predict AAPL daily momentum (return) using lagged market features. To avoid look-ahead bias, all predictors were shifted by one trading day, and the data was split chronologically rather than randomly.
+
+- **Target:** Daily momentum / return
+- **Features:**
+  - `volatility_lag1`
+  - `turnover_value_lag1`
+  - `close_lag1`
+- **Training Set:** 200 observations
+- **Test Set:** 51 observations
+- **Model:** Linear Regression
+- **Split:** 80% training / 20% testing, with temporal order preserved
+
+### Model Performance
+
+| Metric | Test Set Result |
+| :--- | ---: |
+| **R²** | -0.0404 |
+| **RMSE** | 0.0207 |
+| **MAE** | 0.0147 |
+
+The model produced an **R² of -0.0404**, indicating that the selected features and linear specification did not explain the variation in future AAPL returns better than a simple mean-based baseline. The RMSE of **0.0207** and MAE of **0.0147** indicate that the model's typical prediction error was relatively small in absolute return terms, but the low R² suggests limited explanatory and predictive power.
+
+### What Worked?
+
+The modeling pipeline successfully transformed the Stage 9 engineered features into a predictive regression framework. The use of lagged variables and a chronological train/test split ensured that future information was not used to predict past observations. The model also provides an interpretable baseline that can be used for comparison with more advanced approaches.
+
+### Where Might Assumptions Fail?
+
+The main limitation is the model's weak predictive performance, reflected by the negative R² of **-0.0404**. The model assumes that a stable linear relationship exists between lagged volatility, turnover value, closing price, and future returns, which may not hold in financial markets.
+
+The dataset contains only **251 trading days**, with 200 observations used for training and 51 for testing. This relatively small sample limits the reliability and generalizability of the results. In addition, the model does not incorporate fundamental information, market-wide variables, investor sentiment, or macroeconomic factors. As a result, important drivers of AAPL returns may be omitted.
+
+### How Would You Extend Features or Model?
+
+Future iterations could extend the feature set with:
+
+- **Additional lag features:** 1-day, 5-day, and 20-day returns and prices
+- **Rolling statistics:** Moving averages and rolling volatility over multiple windows
+- **Momentum indicators:** RSI and other technical indicators
+- **Volume features:** Volume moving averages and volume-price relationships
+- **Market variables:** S&P 500 returns, interest rates, and broader market volatility
 
 ---
 
